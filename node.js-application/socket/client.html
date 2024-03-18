@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Real-time Chat App</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div id="messages"></div>
+  <input id="m" autocomplete="off" /><button id="send">Send</button>
+  <script>
+    var socket = io();
+    var messages = document.getElementById('messages');
+    var input = document.getElementById('m');
+
+    // 显示消息
+    function displayMessage(msg) {
+      var li = document.createElement('li');
+      li.innerHTML = msg;
+      messages.appendChild(li);
+    }
+
+    // 监听服务器发送的消息
+    socket.on('chat message', function (msg) {
+      displayMessage(msg);
+    });
+
+    // 发送消息
+    document.getElementById('send').onclick = function () {
+      var msg = input.value;
+      if (msg) {
+        displayMessage("Me: " + msg); // 显示发送者的消息
+        socket.emit('chat message', msg); // 发送消息到服务器
+        input.value = ''; // 清空输入框
+      }
+    };
+  </script>
+</body>
+
+</html>

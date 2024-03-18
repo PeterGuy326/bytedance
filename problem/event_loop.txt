@@ -1,0 +1,8 @@
+Timers: 定时器 Interval Timoout 回调事件，将依次执行定时器回调函数
+Pending: 一些系统级回调将会在此阶段执行
+Idle,prepare: 此阶段"仅供内部使用"
+Poll: IO回调函数，这个阶段较为重要也复杂些，
+Check: 执行 setImmediate() 的回调
+Close: 执行 socket 的 close 事件回调
+
+单线程的一个缺点是不能充分利用多核，所以官方推出了 cluster 模块， cluster 模块可以创建共享服务器端口的子进程
